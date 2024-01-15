@@ -5,7 +5,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import { IPinfoWrapper } from 'node-ipinfo'
 
-const ipinfo = new IPinfoWrapper('73a3343725aa42')
+const ipinfo = new IPinfoWrapper(process.env.TOKEN)
 
 const app = express()
 const APP_PORT = process.env.PORT
@@ -65,7 +65,13 @@ app.get('/', async (req, res) => {
 
 app.get('/location', async (req, res) => {
   try {
-    const ipInfo = await ipinfo.lookupIp(req.ip)
+    const ip =
+      req.headers['x-forwarded-for']?.split(',').shift() ||
+      req.socket?.remoteAddress
+
+    console.log('ip', ip)
+
+    const ipInfo = await ipinfo.lookupIp(ip)
 
     return res.json(ipInfo)
   } catch (err) {
