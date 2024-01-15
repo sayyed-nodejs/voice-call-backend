@@ -65,9 +65,7 @@ app.get('/', async (req, res) => {
 
 app.get('/location', async (req, res) => {
   try {
-    const ip =
-      req.headers['x-forwarded-for']?.split(',').shift() ||
-      req.socket?.remoteAddress
+    const ip = req.socket?.remoteAddress
 
     console.log('ip', ip)
 
