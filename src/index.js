@@ -3,6 +3,9 @@ import cors from 'cors'
 import 'dotenv/config'
 import http from 'http'
 import { Server } from 'socket.io'
+import { IPinfoWrapper } from 'node-ipinfo'
+
+const ipinfo = new IPinfoWrapper('73a3343725aa42')
 
 const app = express()
 const APP_PORT = process.env.PORT
@@ -58,6 +61,16 @@ io.on('connection', socket => {
 // default route
 app.get('/', async (req, res) => {
   res.send('Welcome to the voice calling API!')
+})
+
+app.get('/location', async (req, res) => {
+  try {
+    const ipInfo = await ipinfo.lookupIp(req.ip)
+
+    return res.json(ipInfo)
+  } catch (err) {
+    res.status(400).send(err.message)
+  }
 })
 
 server.listen(APP_PORT, () => {
