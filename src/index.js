@@ -29,7 +29,7 @@ io.on('connection', socket => {
   })
 
   // Add the user to the connected users list
-  connectedUsers[socket.id] = socket.id
+  connectedUsers[socket.id] = { id: socket.id, name: null }
 
   // Emit the list of online users to all clients
   io.emit('onlineUsers', Object.values(connectedUsers))
@@ -41,7 +41,7 @@ io.on('connection', socket => {
 
     // Emit the updated list of online users to all clients
     io.emit('onlineUsers', Object.values(connectedUsers))
-    socket.broadcast.emit('callEnded')
+    socket.broadcast.emit('callEnded', { to: socket.id })
   })
   console.log(connectedUsers, 'connectedUsers')
 
