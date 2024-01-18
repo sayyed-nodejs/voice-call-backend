@@ -12,7 +12,8 @@ app.use(cors()).use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
-  pingTimeout: 1000,
+  pingTimeout: 5000,
+  pingInterval:1000
 });
 
 const connectedUsers = {}; // Keep track of connected users
