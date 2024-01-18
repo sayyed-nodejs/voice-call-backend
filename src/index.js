@@ -12,7 +12,7 @@ app.use(cors()).use(express.json());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
-  pingTimeout: 5000,
+  pingTimeout: 1000,
   pingInterval:1000
 });
 
