@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 
     // // Emit the updated list of online users to all clients
     io.emit("onlineUsers", Object.values(connectedUsers));
-    io.emit("callEnded", { to: socket.id });
+    // io.emit("callEnded", { to: socket.id });
   });
   console.log(connectedUsers,"connectedUsers")
 
