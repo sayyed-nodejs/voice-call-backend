@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
   pingTimeout: 1000,
-  pingInterval: 1000, // Adjust as needed
+  pingInterval: 1000, 
 });
 
 const connectedUsers = {}; // Keep track of connected users
@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
   });
 
   // Add the user to the connected users list
-  connectedUsers[socket.id] = { id: socket.id, name: null };
+  // connectedUsers[socket.id] = { id: socket.id, name: null };
 
   // Emit the list of online users to all clients
   io.emit("onlineUsers", Object.values(connectedUsers));
