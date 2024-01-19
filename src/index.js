@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
   });
 
   // Add the user to the connected users list
-  connectedUsers[socket.id] = { id: socket.id, name: null };
+  // connectedUsers[socket.id] = { id: socket.id, name: null };
 
   // Emit the list of online users to all clients
   io.emit("onlineUsers", Object.values(connectedUsers));
