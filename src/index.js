@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
     // Remove the user from the connected users list
-    delete connectedUsers[socket.id];
+    // delete connectedUsers[socket.id];
 
     // // Emit the updated list of online users to all clients
     // io.emit("onlineUsers", Object.values(connectedUsers));
