@@ -29,8 +29,6 @@ io.on('connection', socket => {
     if (index !== -1) {
       availableUsers.splice(index, 1)
     }
-
-    io.emit('availableUsers', availableUsers)
   })
 
   socket.on('call', () => {
@@ -39,26 +37,25 @@ io.on('connection', socket => {
 
     console.log('availableUsers', availableUsers)
 
-    if (availableUsers.length >= 2) {
-      // const randomIndex1 = Math.floor(Math.random() * availableUsers.length)
-      // const randomIndex2 = Math.floor(Math.random() * availableUsers.length)
-      const randomIndex1 = 0
-      const randomIndex2 = 1
+    if (availableUsers.length === 2) {
+      const Index1 = 0
+      const Index2 = 1
 
-      console.log('randomIndex1, randomIndex2', randomIndex1, randomIndex2)
+      const user1 = availableUsers[Index1]
+      const user2 = availableUsers[Index2]
 
-      const user1 = availableUsers[randomIndex1]
-      const user2 = availableUsers[randomIndex2]
-
-      io.to(user1).emit('startCall', user2)
-      io.to(user2).emit('startCall', user1)
+      io.to(user1).emit('startCall', {
+        participants: availableUsers,
+        otherUserId: user2,
+      })
+      io.to(user2).emit('startCall', {
+        participants: availableUsers,
+        otherUserId: user1,
+      })
 
       // Remove the pairedavailableUsers from the list
-      availableUsers.splice(randomIndex1, 1)
-      availableUsers.splice(
-        randomIndex2 > randomIndex1 ? randomIndex2 - 1 : randomIndex2,
-        1
-      )
+      availableUsers.splice(Index1, 1)
+      availableUsers.splice(Index2 > Index1 ? Index2 - 1 : Index2, 1)
 
       io.emit('availableUsers', availableUsers)
     }
